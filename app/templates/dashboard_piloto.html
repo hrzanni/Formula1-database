@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-1">{{ info.nome_completo }}</h2>
+<p class="text-muted mb-4">
+  <strong>Escuderia mais recente:</strong> {{ info.escuderia_atual or '—' }} &nbsp;|&nbsp;
+  <strong>Ativo:</strong> {{ info.primeiro_ano }} – {{ info.ultimo_ano }}
+</p>
+
+<h5 class="mb-2">Desempenho por ano e circuito</h5>
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-hover">
+    <thead>
+      <tr><th>Ano</th><th>Circuito</th><th>Pontos</th><th>Vitórias</th><th>Corridas</th></tr>
+    </thead>
+    <tbody>
+      {% for d in desempenho %}
+      <tr>
+        <td>{{ d.ano }}</td>
+        <td>{{ d.circuito }}</td>
+        <td>{{ d.pontos }}</td>
+        <td>{{ d.vitorias }}</td>
+        <td>{{ d.corridas }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

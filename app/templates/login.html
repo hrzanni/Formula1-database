@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title mb-4 text-center">🏁 Login</h4>
+        <form method="POST">
+          <div class="mb-3">
+            <label class="form-label">Usuário</label>
+            <input name="login" class="form-control" placeholder="Ex: admin ou hamilton_d" required autofocus>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Senha</label>
+            <input name="password" type="password" class="form-control" required>
+          </div>
+          <button class="btn btn-dark w-100">Entrar</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-muted text-center mt-3 small">SCC-541 Laboratório de Bases de Dados — Grupo 09</p>
+  </div>
+</div>
+{% endblock %}

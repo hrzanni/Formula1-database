@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Dashboard — Administrador</h2>
+  <div class="d-flex gap-2">
+    <a href="/cadastrar/escuderia" class="btn btn-outline-primary">+ Escuderia</a>
+    <a href="/cadastrar/piloto"    class="btn btn-outline-secondary">+ Piloto</a>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card text-center border-0 shadow-sm p-3">
+      <div class="text-muted small">Pilotos cadastrados</div>
+      <div class="display-5 fw-bold">{{ totais.total_pilotos }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center border-0 shadow-sm p-3">
+      <div class="text-muted small">Escuderias cadastradas</div>
+      <div class="display-5 fw-bold">{{ totais.total_escuderias }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card text-center border-0 shadow-sm p-3">
+      <div class="text-muted small">Temporadas</div>
+      <div class="display-5 fw-bold">{{ totais.total_temporadas }}</div>
+    </div>
+  </div>
+</div>
+
+<h5 class="mb-2">Corridas da temporada mais recente</h5>
+<div class="table-responsive mb-4">
+  <table class="table table-sm table-striped table-hover">
+    <thead><tr><th>Corrida</th><th>Circuito</th><th>Data</th><th>Horário</th><th>Voltas</th></tr></thead>
+    <tbody>
+      {% for r in corridas %}
+      <tr>
+        <td>{{ r.corrida }}</td>
+        <td>{{ r.circuito }}</td>
+        <td>{{ r.data }}</td>
+        <td>{{ r.horario }}</td>
+        <td>{{ r.total_voltas }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-6">
+    <h5>Escuderias — pontos na temporada</h5>
+    <div class="table-responsive" style="max-height:350px;overflow-y:auto">
+      <table class="table table-sm table-striped">
+        <thead><tr><th>Escuderia</th><th>Pontos</th></tr></thead>
+        <tbody>
+          {% for e in escuderias %}
+          <tr><td>{{ e.escuderia }}</td><td>{{ e.total_pontos }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h5>Pilotos — pontos na temporada</h5>
+    <div class="table-responsive" style="max-height:350px;overflow-y:auto">
+      <table class="table table-sm table-striped">
+        <thead><tr><th>Piloto</th><th>Pontos</th></tr></thead>
+        <tbody>
+          {% for p in pilotos %}
+          <tr><td>{{ p.piloto }}</td><td>{{ p.total_pontos }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

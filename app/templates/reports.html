@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Relatórios</h2>
+
+{% if tipo == 'Admin' %}
+  {% if pedir_cidade %}
+    <div class="card shadow-sm p-4" style="max-width:400px">
+      <h5>Relatório 2 — Aeroportos Brasileiros</h5>
+      <p class="text-muted small">Informe o nome de uma cidade brasileira para listar aeroportos num raio de 100 km.</p>
+      <form method="GET" action="/relatorio/2">
+        <div class="mb-3">
+          <label class="form-label">Nome da cidade</label>
+          <input name="cidade" class="form-control" placeholder="Ex: São Paulo" required autofocus>
+        </div>
+        <button class="btn btn-dark">Buscar</button>
+        <a href="/relatorios" class="btn btn-outline-secondary ms-2">Cancelar</a>
+      </form>
+    </div>
+  {% else %}
+    <div class="d-flex flex-wrap gap-3">
+      <a href="/relatorio/1" class="btn btn-outline-dark">R1 — Resultados por Status</a>
+      <a href="/relatorios?pedir=2" class="btn btn-outline-dark">R2 — Aeroportos Brasileiros</a>
+      <a href="/relatorio/3" class="btn btn-outline-dark">R3 — Circuitos Hierárquico</a>
+    </div>
+  {% endif %}
+
+{% elif tipo == 'Escuderia' %}
+  <div class="d-flex flex-wrap gap-3">
+    <a href="/relatorio/4" class="btn btn-outline-dark">R4 — Pilotos e Vitórias</a>
+    <a href="/relatorio/5" class="btn btn-outline-dark">R5 — Resultados por Status</a>
+  </div>
+
+{% else %}
+  <div class="d-flex flex-wrap gap-3">
+    <a href="/relatorio/6" class="btn btn-outline-dark">R6 — Pontos por Ano</a>
+    <a href="/relatorio/7" class="btn btn-outline-dark">R7 — Resultados por Status</a>
+  </div>
+{% endif %}
+{% endblock %}
