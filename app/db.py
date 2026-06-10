@@ -1,12 +1,13 @@
+import os
 import psycopg2
 import psycopg2.extras
 
 DB_CONFIG = {
-    "host":     "pgdb.icmc.usp.br",
-    "dbname":   "scc541_g09_db",
-    "user":     "scc541_g09",
-    "password": "REDACTED",
-    "port":     5432,
+    "host":     os.environ.get("DB_HOST",     "pgdb.icmc.usp.br"),
+    "dbname":   os.environ.get("DB_NAME",     "scc541_g09_db"),
+    "user":     os.environ.get("DB_USER",     "scc541_g09"),
+    "password": os.environ.get("DB_PASSWORD", ""),
+    "port":     int(os.environ.get("DB_PORT", 5432)),
 }
 
 def get_conn():
