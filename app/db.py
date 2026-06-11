@@ -1,6 +1,10 @@
 import os
+from pathlib import Path
+from dotenv import load_dotenv
 import psycopg2
 import psycopg2.extras
+
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 DB_CONFIG = {
     "host":     os.environ.get("DB_HOST",     "pgdb.icmc.usp.br"),
