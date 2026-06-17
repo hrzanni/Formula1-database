@@ -1,6 +1,6 @@
-# F1 Database — Projeto Final SCC-541
+# F1 Database — Projeto Final SCC-0541
 
-Aplicação web para consulta e gerenciamento do banco de dados de Fórmula 1, desenvolvida como projeto final da disciplina **SCC-541 Laboratório de Bases de Dados** (ICMC-USP, 2026).
+Aplicação web para consulta e gerenciamento do banco de dados de Fórmula 1, desenvolvida como projeto final da disciplina **SCC-0541 Laboratório de Bases de Dados**
 
 ---
 
