@@ -52,6 +52,67 @@
     </table>
   </div>
 
+{% elif por_ano %}
+  <div class="accordion" id="acordeaoAnos">
+    {% for row in rows %}
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#ano{{ row['Ano'] }}" aria-expanded="false" aria-controls="ano{{ row['Ano'] }}">
+          <strong>{{ row['Ano'] }}</strong>
+          <span class="ms-3 badge bg-primary">{{ row['Pontos Totais'] }} pontos</span>
+        </button>
+      </h2>
+      <div id="ano{{ row['Ano'] }}" class="accordion-collapse collapse" data-bs-parent="#acordeaoAnos">
+        <div class="accordion-body p-0">
+          <div class="table-responsive">
+            <table class="table table-sm table-hover mb-0">
+              <thead>
+                <tr><th style="padding: 0.75rem;">Corrida</th><th style="padding: 0.75rem;">Pontos</th></tr>
+              </thead>
+              <tbody class="detalhes-ano" id="detalhes-{{ row['Ano'] }}">
+                <tr><td colspan="2" class="text-center text-muted">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="text-muted small mt-3">{{ rows|length }} ano(s)</p>
+
+  <script>
+    // Carregar detalhes de cada ano quando o acordeão é expandido
+    const carregados = {};
+    document.querySelectorAll('.accordion-button').forEach(button => {
+      button.addEventListener('click', function() {
+        const ano = this.getAttribute('data-bs-target').replace('#ano', '');
+        const detalhesDiv = document.getElementById('detalhes-' + ano);
+        
+        // Se já foi carregado, não recarregar
+        if (carregados[ano]) return;
+        
+        fetch(`/api/relatorio/6/ano/${ano}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.length === 0) {
+              detalhesDiv.innerHTML = '<tr><td colspan="2" class="text-center text-muted">Nenhum dado</td></tr>';
+            } else {
+              detalhesDiv.innerHTML = data.map(row => 
+                `<tr><td style="padding: 0.75rem;">${row['Corrida']}</td><td style="padding: 0.75rem;">${row['Pontos']}</td></tr>`
+              ).join('');
+            }
+            carregados[ano] = true;
+          })
+          .catch(error => {
+            detalhesDiv.innerHTML = '<tr><td colspan="2" class="text-center text-danger">Erro ao carregar</td></tr>';
+            console.error('Erro:', error);
+          });
+      });
+    });
+  </script>
+
 {% elif rows %}
   <div class="table-responsive">
     <table class="table table-striped table-hover">

@@ -28,7 +28,7 @@ SQL_ADMIN_CORRIDAS_RECENTES = """
         ci.name                             AS circuito,
         rc.race_date                        AS data,
         rc.race_time                        AS horario,
-        COALESCE(SUM(res.laps), 0)          AS total_voltas
+        COALESCE(MAX(res.laps), 0)          AS total_voltas
     FROM races rc
     JOIN seasons s   ON s.id  = rc.season_id
     JOIN circuits ci ON ci.id = rc.circuit_id
@@ -209,6 +209,30 @@ SQL_R5 = """
 """
 
 # ── RELATÓRIO 6 (Piloto): pontos por ano ─────────────────────────────────────
+
+SQL_R6_SUMARIO = """
+    SELECT
+        s.year       AS "Ano",
+        SUM(r.points) AS "Pontos Totais"
+    FROM results r
+    JOIN races   rc ON rc.id = r.race_id
+    JOIN seasons s  ON s.id  = rc.season_id
+    WHERE r.driver_id = %s
+    GROUP BY s.year
+    ORDER BY s.year DESC
+"""
+
+SQL_R6_DETALHES = """
+    SELECT
+        rc.race_name AS "Corrida",
+        SUM(r.points) AS "Pontos"
+    FROM results r
+    JOIN races   rc ON rc.id = r.race_id
+    JOIN seasons s  ON s.id  = rc.season_id
+    WHERE r.driver_id = %s AND s.year = %s
+    GROUP BY rc.id, rc.race_name
+    ORDER BY rc.race_name
+"""
 
 SQL_R6 = """
     SELECT

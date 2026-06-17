@@ -1,7 +1,7 @@
 import csv
 import io
 from flask import (Flask, render_template, request, session,
-                   redirect, url_for, flash)
+                   redirect, url_for, flash, jsonify)
 from db import query, execute
 import queries as Q
 
@@ -95,6 +95,16 @@ def relatorio(num):
 
     if (num, tipo) in MAPA:
         sql, params, titulo = MAPA[(num, tipo)]
+        
+        # Tratamento especial para relatório 6 (Pontos por Ano)
+        if num == 6 and tipo == 'Piloto':
+            sumario = query(Q.SQL_R6_SUMARIO, params)
+            return render_template('report_result.html',
+                                   titulo=titulo,
+                                   rows=sumario,
+                                   por_ano=True,
+                                   driver_id=oid)
+        
         return render_template('report_result.html',
                                titulo=titulo,
                                rows=query(sql, params))
@@ -138,7 +148,13 @@ def cadastrar_escuderia():
             ))
             flash(f'Escuderia "{f["name"]}" cadastrada. Login: {ref}_c  Senha: {ref}', 'success')
         except Exception as e:
-            flash(f'Erro: {e}', 'danger')
+            erro_msg = str(e).lower()
+            if 'duplicate' in erro_msg or 'já existe' in erro_msg or 'unique constraint' in erro_msg:
+                flash(f'A referência "{ref}" já existe. Escolha uma referência diferente.', 'warning')
+            elif 'constraint' in erro_msg:
+                flash(f'Erro: Verifique se os dados estão corretos (país inválido?).', 'warning')
+            else:
+                flash(f'Erro inesperado: {e}', 'danger')
         return redirect(url_for('dashboard'))
 
     return render_template('action_form.html',
@@ -170,7 +186,13 @@ def cadastrar_piloto():
             ))
             flash(f'Piloto "{f["given_name"]} {f["family_name"]}" cadastrado. Login: {ref}_d  Senha: {ref}', 'success')
         except Exception as e:
-            flash(f'Erro: {e}', 'danger')
+            erro_msg = str(e).lower()
+            if 'duplicate' in erro_msg or 'já existe' in erro_msg or 'unique constraint' in erro_msg:
+                flash(f'A referência "{ref}" já existe. Escolha uma referência diferente.', 'warning')
+            elif 'constraint' in erro_msg:
+                flash(f'Erro: Verifique se os dados estão corretos (data de nascimento inválida?).', 'warning')
+            else:
+                flash(f'Erro inesperado: {e}', 'danger')
         return redirect(url_for('dashboard'))
 
     return render_template('action_form.html',
@@ -242,6 +264,17 @@ def importar_pilotos():
     return render_template('action_form.html',
                            titulo='Importar Pilotos por CSV',
                            upload=True)
+
+
+# ── APIS AUXILIARES ──────────────────────────────────────────────────────────
+
+@app.route('/api/relatorio/6/ano/<int:ano>')
+def api_relatorio_6_ano(ano):
+    if 'userid' not in session or session.get('tipo') != 'Piloto':
+        return jsonify([])
+    
+    detalhes = query(Q.SQL_R6_DETALHES, (session['id_original'], ano))
+    return jsonify([dict(row) for row in detalhes])
 
 
 if __name__ == '__main__':
