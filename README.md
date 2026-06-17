@@ -67,24 +67,6 @@ pip install -r requirements.txt
 
 ---
 
-## Executar os scripts SQL (apenas uma vez)
-
-Os scripts devem ser executados **em ordem** no banco remoto:
-
-```bash
-PGPASSWORD=<senha> psql -h pgdb.icmc.usp.br -U scc541_g09 -d scc541_g09_db \
-  -f sql/01_users_tables.sql \
-  -f sql/02_populate_users.sql \
-  -f sql/03_triggers.sql \
-  -f sql/04_functions.sql \
-  -f sql/05_views.sql \
-  -f sql/06_indexes.sql
-```
-
-> Se o banco já tiver sido configurado (tabelas USERS e USERS_LOG existentes), pule este passo — os scripts usam `IF NOT EXISTS` e `ON CONFLICT DO NOTHING` e são idempotentes.
-
----
-
 ## Rodar a aplicação
 
 ```bash
