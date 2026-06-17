@@ -9,19 +9,18 @@ Aplicação web para consulta e gerenciamento do banco de dados de Fórmula 1, d
 ```
 ProjetoFinal/
 ├── sql/
-│   ├── 01_users_tables.sql   # Tabelas USERS e USERS_LOG
-│   ├── 02_populate_users.sql # Carga inicial de usuários
-│   ├── 03_triggers.sql       # Auto-criação de usuário ao inserir piloto/escuderia
-│   ├── 04_functions.sql      # Functions de dashboard (fn_vitorias_escuderia etc.)
-│   ├── 05_views.sql          # Views auxiliares
-│   └── 06_indexes.sql        # Índices de performance
+│   ├── 01_users_tables.sql
+│   ├── 02_populate_users.sql
+│   ├── 03_triggers.sql
+│   ├── 04_functions.sql
+│   ├── 05_views.sql
+│   └── 06_indexes.sql
 ├── app/
-│   ├── db.py                 # Conexão psycopg2 (lê credenciais do .env)
-│   ├── queries.py            # Todas as queries SQL explícitas
-│   ├── app.py                # Rotas Flask
-│   └── templates/            # Templates HTML (Bootstrap 5)
-├── .env.example              # Modelo do arquivo de credenciais
-├── requirements.txt
+│   ├── db.py
+│   ├── queries.py
+│   ├── app.py
+│   └── templates/
+├── .env.example requirements.txt
 └── README.md
 ```
 
