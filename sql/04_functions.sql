@@ -1,27 +1,24 @@
--- ============================================================
 -- fn_vitorias_escuderia: corridas com position_order = 1
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_vitorias_escuderia(p_constructor_id VARCHAR)
+
+CREATE FUNCTION fn_vitorias_escuderia(p_constructor_id VARCHAR)
 RETURNS INTEGER LANGUAGE sql STABLE AS $$
     SELECT COUNT(*)::INTEGER
     FROM results
     WHERE constructor_id = p_constructor_id AND position_order = 1;
 $$;
 
--- ============================================================
 -- fn_pilotos_escuderia: pilotos distintos que correram pela escuderia
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_pilotos_escuderia(p_constructor_id VARCHAR)
+
+CREATE FUNCTION fn_pilotos_escuderia(p_constructor_id VARCHAR)
 RETURNS INTEGER LANGUAGE sql STABLE AS $$
     SELECT COUNT(DISTINCT driver_id)::INTEGER
     FROM results
     WHERE constructor_id = p_constructor_id;
 $$;
 
--- ============================================================
 -- fn_anos_escuderia: primeiro e último ano com dados em results
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_anos_escuderia(
+
+CREATE FUNCTION fn_anos_escuderia(
     p_constructor_id VARCHAR,
     OUT primeiro_ano  INTEGER,
     OUT ultimo_ano    INTEGER
@@ -35,10 +32,9 @@ CREATE OR REPLACE FUNCTION fn_anos_escuderia(
     WHERE r.constructor_id = p_constructor_id;
 $$;
 
--- ============================================================
 -- fn_anos_piloto: primeiro e último ano com dados em results
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_anos_piloto(
+
+CREATE FUNCTION fn_anos_piloto(
     p_driver_id  VARCHAR,
     OUT primeiro_ano INTEGER,
     OUT ultimo_ano   INTEGER
@@ -52,10 +48,9 @@ CREATE OR REPLACE FUNCTION fn_anos_piloto(
     WHERE r.driver_id = p_driver_id;
 $$;
 
--- ============================================================
 -- fn_desempenho_piloto: pontos, vitórias e corridas por ano e circuito
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_desempenho_piloto(p_driver_id VARCHAR)
+
+CREATE FUNCTION fn_desempenho_piloto(p_driver_id VARCHAR)
 RETURNS TABLE(
     ano      INTEGER,
     circuito VARCHAR,

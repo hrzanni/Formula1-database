@@ -8,7 +8,7 @@ import queries as Q
 app = Flask(__name__)
 app.secret_key = 'f1_scc541_g09_secret'
 
-# ── TELA 1: LOGIN ─────────────────────────────────────────────────────────────
+# TELA 1: LOGIN 
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -39,7 +39,7 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-# ── TELA 2: DASHBOARD ─────────────────────────────────────────────────────────
+# TELA 2: DASHBOARD 
 
 @app.route('/dashboard')
 def dashboard():
@@ -65,7 +65,7 @@ def dashboard():
         info=info,
         desempenho=query(Q.SQL_PILOTO_DESEMPENHO, (oid,)))
 
-# ── TELA 3: RELATÓRIOS ────────────────────────────────────────────────────────
+# TELA 3: RELATÓRIOS 
 
 @app.route('/relatorios')
 def relatorios():
@@ -128,7 +128,7 @@ def relatorio(num):
     flash('Relatório indisponível para este perfil.', 'warning')
     return redirect(url_for('relatorios'))
 
-# ── AÇÕES ADMIN ───────────────────────────────────────────────────────────────
+# AÇÕES ADMIN 
 
 @app.route('/cadastrar/escuderia', methods=['GET', 'POST'])
 def cadastrar_escuderia():
@@ -205,7 +205,7 @@ def cadastrar_piloto():
                                ('nationality',   'Nacionalidade (opcional)',      False),
                            ])
 
-# ── AÇÕES ESCUDERIA ───────────────────────────────────────────────────────────
+# AÇÕES ESCUDERIA 
 
 @app.route('/buscar/piloto', methods=['GET', 'POST'])
 def buscar_piloto():
@@ -266,7 +266,7 @@ def importar_pilotos():
                            upload=True)
 
 
-# ── APIS AUXILIARES ──────────────────────────────────────────────────────────
+# APIS AUXILIARES 
 
 @app.route('/api/relatorio/6/ano/<int:ano>')
 def api_relatorio_6_ano(ano):

@@ -1,7 +1,4 @@
--- ============================================================
--- POPULA USERS A PARTIR DAS TABELAS EXISTENTES
--- encode(sha256(...), 'hex') disponível no PostgreSQL >= 11
--- ============================================================
+-- INSERE EM 'USERS' A PARTIR DAS TABELAS EXISTENTES
 
 -- Admin único
 INSERT INTO USERS (login, password, tipo, id_original)
@@ -13,7 +10,7 @@ VALUES (
 )
 ON CONFLICT (login) DO NOTHING;
 
--- Escuderias: login = constructor_ref || '_c', senha = sha256(constructor_ref)
+-- Escuderias: login = constructor_ref + '_c', senha = sha256(constructor_ref)
 INSERT INTO USERS (login, password, tipo, id_original)
 SELECT
     c.constructor_ref || '_c',
@@ -23,7 +20,7 @@ SELECT
 FROM constructors c
 ON CONFLICT (login) DO NOTHING;
 
--- Pilotos: login = driver_ref || '_d', senha = sha256(driver_ref)
+-- Pilotos: login = driver_ref + '_d', senha = sha256(driver_ref)
 INSERT INTO USERS (login, password, tipo, id_original)
 SELECT
     d.driver_ref || '_d',

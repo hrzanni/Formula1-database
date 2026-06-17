@@ -3,7 +3,7 @@ import hashlib
 def sha256_hex(s: str) -> str:
     return hashlib.sha256(s.encode()).hexdigest()
 
-# ── AUTENTICAÇÃO ──────────────────────────────────────────────────────────────
+# AUTENTICAÇÃO 
 
 SQL_LOGIN = """
     SELECT userid, login, tipo, id_original
@@ -13,7 +13,7 @@ SQL_LOGIN = """
 
 SQL_INSERT_LOG = "INSERT INTO USERS_LOG (userid, tipo_acao) VALUES (%s, %s)"
 
-# ── DASHBOARD ADMIN ───────────────────────────────────────────────────────────
+# DASHBOARD ADMIN
 
 SQL_ADMIN_TOTAIS = """
     SELECT
@@ -64,7 +64,7 @@ SQL_ADMIN_STANDINGS_PILOTOS = """
     ORDER BY total_pontos DESC
 """
 
-# ── DASHBOARD ESCUDERIA ───────────────────────────────────────────────────────
+# DASHBOARD ESCUDERIA 
 
 SQL_ESCUDERIA_INFO = """
     SELECT
@@ -77,7 +77,7 @@ SQL_ESCUDERIA_INFO = """
     WHERE c.id = %s
 """
 
-# ── DASHBOARD PILOTO ──────────────────────────────────────────────────────────
+# DASHBOARD PILOTO 
 
 SQL_PILOTO_INFO = """
     SELECT
@@ -100,7 +100,7 @@ SQL_PILOTO_INFO = """
 
 SQL_PILOTO_DESEMPENHO = "SELECT * FROM fn_desempenho_piloto(%s)"
 
-# ── RELATÓRIO 1 (Admin): resultados por status ────────────────────────────────
+# RELATÓRIO 1 (Admin): resultados por status 
 
 SQL_R1 = """
     SELECT
@@ -112,8 +112,8 @@ SQL_R1 = """
     ORDER BY COUNT(*) DESC
 """
 
-# ── RELATÓRIO 2 (Admin): cidades BR + aeroportos dentro de 100km ──────────────
-# earthdistance não disponível — usa fórmula de Haversine em SQL puro
+# RELATÓRIO 2 (Admin): cidades BR + aeroportos dentro de 100km
+# Fórmula de Haversine em SQL 
 
 SQL_R2 = """
     SELECT
@@ -148,7 +148,7 @@ SQL_R2 = """
     ORDER BY "Distância (km)"
 """
 
-# ── RELATÓRIO 3 (Admin): hierárquico circuitos ────────────────────────────────
+# RELATÓRIO 3 (Admin)
 
 SQL_R3_TOTAL = "SELECT COUNT(*) AS total FROM races"
 
@@ -182,7 +182,7 @@ SQL_R3_CORRIDA = """
     ORDER BY ci.name, rc.race_date
 """
 
-# ── RELATÓRIO 4 (Escuderia): pilotos + vitórias ───────────────────────────────
+# RELATÓRIO 4 (Escuderia): pilotos + vitórias 
 
 SQL_R4 = """
     SELECT
@@ -195,7 +195,7 @@ SQL_R4 = """
     ORDER BY "Vitórias" DESC
 """
 
-# ── RELATÓRIO 5 (Escuderia): resultados por status da escuderia ───────────────
+# RELATÓRIO 5 (Escuderia): resultados por status da escuderia
 
 SQL_R5 = """
     SELECT
@@ -208,7 +208,7 @@ SQL_R5 = """
     ORDER BY COUNT(*) DESC
 """
 
-# ── RELATÓRIO 6 (Piloto): pontos por ano ─────────────────────────────────────
+# RELATÓRIO 6 (Piloto): pontos por ano
 
 SQL_R6_SUMARIO = """
     SELECT
@@ -247,7 +247,7 @@ SQL_R6 = """
     ORDER BY s.year, rc.race_name
 """
 
-# ── RELATÓRIO 7 (Piloto): resultados por status do piloto ────────────────────
+# RELATÓRIO 7 (Piloto): resultados por status do piloto 
 
 SQL_R7 = """
     SELECT
@@ -260,7 +260,7 @@ SQL_R7 = """
     ORDER BY COUNT(*) DESC
 """
 
-# ── AÇÕES ADMIN: cadastro ─────────────────────────────────────────────────────
+# AÇÕES ADMIN: cadastro 
 
 SQL_INSERT_CONSTRUCTOR = """
     INSERT INTO constructors (id, constructor_ref, name, nationality, country_id, wikipedia_url)
@@ -272,7 +272,7 @@ SQL_INSERT_DRIVER = """
     VALUES (%s, %s, %s, %s, %s, %s)
 """
 
-# ── AÇÃO ESCUDERIA: busca piloto por sobrenome ────────────────────────────────
+# AÇÃO ESCUDERIA: busca piloto por sobrenome
 
 SQL_BUSCA_PILOTO = """
     SELECT DISTINCT

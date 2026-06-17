@@ -1,8 +1,7 @@
--- ============================================================
 -- TRIGGER: Criar usuário ao inserir nova escuderia
--- Lança exceção se login já existir (evita duplicatas)
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_criar_usuario_escuderia()
+-- Lança exceção se login já existir
+
+CREATE FUNCTION fn_criar_usuario_escuderia()
 RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN
     IF EXISTS (SELECT 1 FROM USERS WHERE login = NEW.constructor_ref || '_c') THEN
@@ -24,10 +23,10 @@ CREATE TRIGGER TR_Constructors_User
 AFTER INSERT ON constructors
 FOR EACH ROW EXECUTE FUNCTION fn_criar_usuario_escuderia();
 
--- ============================================================
+
 -- TRIGGER: Criar usuário ao inserir novo piloto
--- ============================================================
-CREATE OR REPLACE FUNCTION fn_criar_usuario_piloto()
+
+CREATE FUNCTION fn_criar_usuario_piloto()
 RETURNS TRIGGER LANGUAGE plpgsql AS $$
 BEGIN
     IF EXISTS (SELECT 1 FROM USERS WHERE login = NEW.driver_ref || '_d') THEN
